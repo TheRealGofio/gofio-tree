@@ -17,7 +17,7 @@
     "icons"
   ],
   "bin": {
-    "gofiols": "./bin/gofio-tree.js"
+    "gofiols": "bin/gofio-tree.js"
   },
   "files": [
     "bin",
@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TheRealGofio/gofio-tree"
+    "url": "git+https://github.com/TheRealGofio/gofio-tree.git"
   },
   "homepage": "https://github.com/TheRealGofio/gofio-tree#readme",
   "bugs": "https://github.com/TheRealGofio/gofio-tree/issues",
