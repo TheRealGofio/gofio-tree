@@ -17,7 +17,7 @@
     "icons"
   ],
   "bin": {
-    "gofiols": "./bin/gofiols.js"
+    "gofiols": "./bin/gofio-tree.js"
   },
   "files": [
     "bin",
@@ -27,7 +27,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "dev": "node ./bin/gofiols.js ."
+    "dev": "node ./bin/gofio-tree.js ."
   },
   "engines": {
     "node": ">=18"
@@ -41,5 +41,5 @@
   },
   "homepage": "https://github.com/TheRealGofio/gofio-tree#readme",
   "bugs": "https://github.com/TheRealGofio/gofio-tree/issues",
-  "changelog": "https://github.com/TheRealGofio/gofio-tree/blob/master/CHANGELOG.md"
+  "changelog": "https://github.com/TheRealGofio/gofio-tree/blob/main/CHANGELOG.md"
 }
