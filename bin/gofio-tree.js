@@ -121,6 +121,24 @@ function copyToClipboardSync(text) {
   const platform = process.platform;
   const { execSync } = require("child_process");
   
+  // Convert Unicode tree characters to ASCII on Windows
+  if (platform === "win32") {
+    text = text.replace(/[├│└─┌┐]/g, (char) => {
+      const treeMap = {
+        '├': '|',
+        '│': '|',
+        '└': '+',
+        '─': '-',
+        '┌': '+',
+        '┐': '+'
+      };
+      return treeMap[char] || char;
+    });
+    
+    // Remove emojis (they don't work well in Windows clipboard)
+    text = text.replace(/[\p{Emoji}\u{1F300}-\u{1F9FF}]/gu, '');
+  }
+  
   try {
     if (platform === "win32") {
       execSync("clip", { input: text, stdio: ["pipe", "ignore", "ignore"] });
@@ -150,7 +168,6 @@ function copyToClipboardSync(text) {
     return false;
   }
 }
-
 
 // Map flags to variable names and handlers
 const flagHandlers = {
