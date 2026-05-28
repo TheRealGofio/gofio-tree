@@ -96,18 +96,21 @@ gofiols . -c
 
 # Copy full tree including node_modules
 gofiols . --all --copy
+
+# On Windows, use ASCII icons for better clipboard compatibility
+gofiols . --icons ascii --copy
 ```
 
 ### Different icon sets
 
 ```bash
-# Emoji icons (default)
+# Emoji icons (recommended)
 gofiols . --icons emoji
 
 # Nerd Font icons (requires Nerd Font terminal)
 gofiols . --icons nerd
 
-# ASCII only (no icons, works everywhere)
+# ASCII only (no icons, works everywhere, good for Windows)
 gofiols . --icons ascii
 ```
 
@@ -121,22 +124,37 @@ gofiols . --copy  # automatically disables colors
 
 ## Icons
 
-By default, `gofiols` uses **emoji icons** with file type classification:
+By default, `gofiols` uses **Nerd Font icons**. If your terminal supports Nerd Fonts, you'll see精美 icons for different file types.
 
-- 📁 Directories
-- 🟨 JavaScript/TypeScript files
-- 🟦 CSS/SCSS files
-- 🟩 HTML/Markdown files
-- 🟪 Config files (JSON, YAML, TOML, etc.)
-- 🟧 Test files
-- 🟥 Videos
-- 🟨 Audio
-- 🟫 Archives
-- ⚙️ Package files
-- 📌 Other files
-- 📄 Default files
-- 🔗 Symlinks
-- 👁️ Hidden files
+### Emoji icons (recommended)
+
+```bash
+gofiols . --icons emoji
+```
+
+Icon mapping:
+
+| Icon | Type |
+|------|------|
+| 📁 | Directories |
+| 🟨 | JavaScript files |
+| 📘 | TypeScript files |
+| ⚛️ | React/JSX/TSX/Vue/Svelte/Astro |
+| 🎨 | CSS/SCSS/SASS/LESS/Stylus |
+| 🌐 | HTML/MDX |
+| ⚙️ | Config files (JSON, YAML, TOML, etc.) |
+| 📄 | Markdown/Text |
+| 🖼️ | Images (PNG, JPG, SVG, etc.) |
+| 🎬 | Videos (MP4, WebM, MOV, etc.) |
+| 🎵 | Audio (MP3, WAV, FLAC, etc.) |
+| 📜 | Shell scripts (Bash, Zsh, Fish, etc.) |
+| 📦 | Archives (ZIP, TAR, GZ, RAR, etc.) |
+| 🧪 | Test files (*.spec, *.test) |
+| 🐳 | Dockerfiles, docker-compose |
+| 🔒 | Lock files (package-lock.json, yarn.lock, etc.) |
+| 👻 | Hidden files (starting with `.`) |
+| 📌 | Other files |
+| 🔗 | Symlinks |
 
 ### Nerd Font icons
 
@@ -154,22 +172,4 @@ If icons don't render correctly:
 gofiols . --icons ascii
 ```
 
-## File Type Detection
-
-`gofiols` automatically detects and colors/icons for:
-
-- **Languages**: JavaScript, TypeScript, JSX, TSX, Vue, Svelte, Astro
-- **Styles**: CSS, SCSS, SASS, LESS, Stylus
-- **Markup**: HTML, MD, MDX
-- **Config**: JSON, JSONC, YAML, YML, TOML, INI, ENV
-- **Package**: package.json, yarn.lock, package-lock.json, pnpm-lock.yaml, Cargo.lock
-- **Media**: PNG, JPG, GIF, SVG, MP4, WebM, MP3, WAV, etc.
-- **Scripts**: SH, Bash, Zsh, Fish, PS1, Bat
-- **Archives**: ZIP, TAR, GZ, RAR, 7Z
-- **DevOps**: Dockerfile, docker-compose.yml, Makefile
-- **Test**: *.spec.js, *.test.ts, etc.
-- **Hidden**: Files starting with `.`
-
-## License
-
-ISC
+Example output:
