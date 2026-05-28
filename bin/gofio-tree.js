@@ -123,6 +123,7 @@ function copyToClipboardSync(text) {
   
   // Convert Unicode tree characters to ASCII on Windows
   if (platform === "win32") {
+    icons = 'ascii';
     text = text.replace(/[├│└─┌┐]/g, (char) => {
       const treeMap = {
         '├': '|',
