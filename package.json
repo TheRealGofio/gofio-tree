@@ -1,7 +1,7 @@
 {
   "name": "gofio-tree",
   "version": "0.1.3",
-  "description": "CLI para renderizar árboles de directorios con iconos y colores",
+  "description": "A vibe-coded CLI for rendering directory trees with icons and colors",
   "author": "TheRealGofio",
   "license": "ISC",
   "keywords": [
@@ -9,24 +9,37 @@
     "cli",
     "filesystem",
     "terminal",
-    "nodejs"
+    "nodejs",
+    "vibe-coded",
+    "directory",
+    "folder",
+    "colors",
+    "icons"
   ],
   "bin": {
-    "gofiols": "./bin/gofio-tree.js"
+    "gofiols": "./bin/gofiols.js"
   },
   "files": [
     "bin",
     "src",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
-    "dev": "node ./bin/gofio-tree.js ."
+    "dev": "node ./bin/gofiols.js ."
   },
   "engines": {
     "node": ">=18"
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheRealGofio/gofio-tree"
+  },
+  "homepage": "https://github.com/TheRealGofio/gofio-tree#readme",
+  "bugs": "https://github.com/TheRealGofio/gofio-tree/issues",
+  "changelog": "https://github.com/TheRealGofio/gofio-tree/blob/master/CHANGELOG.md"
 }
