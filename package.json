@@ -1,0 +1,32 @@
+{
+  "name": "gofio-tree",
+  "version": "0.1.3",
+  "description": "CLI para renderizar árboles de directorios con iconos y colores",
+  "author": "TheRealGofio",
+  "license": "ISC",
+  "keywords": [
+    "tree",
+    "cli",
+    "filesystem",
+    "terminal",
+    "nodejs"
+  ],
+  "bin": {
+    "gofiols": "./bin/gofio-tree.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "node ./bin/gofio-tree.js ."
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
