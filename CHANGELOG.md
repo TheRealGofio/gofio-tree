@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-05-28
+
+### Fixed
+
+- **Windows clipboard**: Convert Unicode tree characters to ASCII when copying on Windows
+  - Tree characters (`├│└─`) automatically converted to ASCII (`|+-`)
+  - Emojis removed from clipboard output to prevent corruption
+  - Terminal output still shows full Unicode, only clipboard is converted
+  - Fixes garbled characters like `ÔööÔöÇÔöÇ` when pasting from Windows clipboard
+
 ## [0.1.1] - 2026-05-28
 
 ### Added
