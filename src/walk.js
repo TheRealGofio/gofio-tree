@@ -3,7 +3,11 @@ const path = require("node:path");
 const { DEFAULT_IGNORES } = require("./constants");
 
 
-function getDirSize(dirPath, ignores, showHidden, maxDepth, currentDepth) {
+function getDirSize(dirPath, ignores, showHidden, maxDepth, currentDepth, sizeCache) {
+  if (sizeCache && sizeCache.has(dirPath)) {
+    return sizeCache.get(dirPath);
+  }
+
   let totalSize = 0;
   
   try {
@@ -22,8 +26,7 @@ function getDirSize(dirPath, ignores, showHidden, maxDepth, currentDepth) {
       const stats = fs.lstatSync(fullPath);
       
       if (stats.isDirectory() && !stats.isSymbolicLink()) {
-        // Recurse into subdirectory (if within depth limit)
-        totalSize += getDirSize(fullPath, ignores, showHidden, maxDepth, currentDepth + 1);
+        totalSize += getDirSize(fullPath, ignores, showHidden, maxDepth, currentDepth + 1, sizeCache);
       } else {
         totalSize += stats.size;
       }
@@ -32,6 +35,9 @@ function getDirSize(dirPath, ignores, showHidden, maxDepth, currentDepth) {
     // Skip directories we can't read
   }
   
+  if (sizeCache) {
+    sizeCache.set(dirPath, totalSize);
+  }
   return totalSize;
 }
 
@@ -42,15 +48,21 @@ function walkTree(rootDir, options = {}) {
   const dirsOnly = options.dirsOnly ?? false;
   const showSize = options.showSize ?? false;
   const ignores = showHidden ? new Set() : (options.ignores ?? DEFAULT_IGNORES);
+  const sizeCache = new Map();
   const entries = [];
 
 
   function visit(currentPath, currentDepth) {
     if (currentDepth > maxDepth) return;
 
+    let dirEntries;
+    try {
+      dirEntries = fs.readdirSync(currentPath, { withFileTypes: true });
+    } catch {
+      return;
+    }
 
-    const dirEntries = fs.readdirSync(currentPath, { withFileTypes: true });
-
+    const statsCache = new Map();
 
     const visibleEntries = dirEntries
       .filter((entry) => {
@@ -69,9 +81,16 @@ function walkTree(rootDir, options = {}) {
       .sort((a, b) => {
         const aFull = path.join(currentPath, a.name);
         const bFull = path.join(currentPath, b.name);
-        const aDir = fs.lstatSync(aFull).isDirectory();
-        const bDir = fs.lstatSync(bFull).isDirectory();
 
+        if (!statsCache.has(aFull)) {
+          statsCache.set(aFull, fs.lstatSync(aFull));
+        }
+        if (!statsCache.has(bFull)) {
+          statsCache.set(bFull, fs.lstatSync(bFull));
+        }
+
+        const aDir = statsCache.get(aFull).isDirectory();
+        const bDir = statsCache.get(bFull).isDirectory();
 
         if (aDir && !bDir) return -1;
         if (!aDir && bDir) return 1;
@@ -82,7 +101,7 @@ function walkTree(rootDir, options = {}) {
     for (const entry of visibleEntries) {
       const fullPath = path.join(currentPath, entry.name);
       const relPath = path.relative(rootDir, fullPath);
-      const stats = fs.lstatSync(fullPath);
+      const stats = statsCache.get(fullPath) || fs.lstatSync(fullPath);
       const entryDepth = currentDepth + 1;
 
 
@@ -104,7 +123,7 @@ function walkTree(rootDir, options = {}) {
 
       // Calculate directory size recursively if showSize is true and it's a directory
       if (showSize && stats.isDirectory() && !stats.isSymbolicLink()) {
-        entryData.size = getDirSize(fullPath, ignores, showHidden, maxDepth, entryDepth);
+        entryData.size = getDirSize(fullPath, ignores, showHidden, maxDepth, entryDepth, sizeCache);
       }
 
 

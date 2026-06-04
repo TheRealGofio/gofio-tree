@@ -7,10 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.3] - 2026-05-28
 ### Fixed
 
-- **Windows clipboard**: Remove emojis
+- **Windows clipboard crash**: ReferenceError on `--copy` due to undeclared variable `icons` (`bin/gofio-tree.js`)
+- **Unreadable directories**: `walk.js` now wraps `readdirSync` in try/catch instead of crashing when permissions are denied
+- **Path validation**: Proper error message when target is a file instead of a directory
+
+### Changed
+
+- **Performance**: `lstatSync` calls halved by caching stats during sort phase, reused in main loop
+- **Performance**: Directory sizes now cached in a Map, eliminating O(n²) recomputation with `--size --human`
+- **ANSI colors**: Unified color definitions — `bin/gofio-tree.js` now imports `COLORS` from `src/constants.js` instead of maintaining a duplicate map
+- **`NO_COLOR` handling**: Consolidated empty-string check across both modules
+- **`--option=value` syntax**: Arguments like `--depth=2` or `--icons=emoji` now work alongside the space-separated form
+
+## [0.1.3] - 2026-05-28
+
+### Fixed
+
+- **Windows clipboard**: Remove emojis from clipboard output to prevent corruption
 
 ## [0.1.2] - 2026-05-28
 

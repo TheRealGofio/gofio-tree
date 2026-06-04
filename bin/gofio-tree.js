@@ -3,6 +3,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { gofioTree } = require("../src");
+const { COLORS } = require("../src/constants");
 const packageJson = require("../package.json");
 
 
@@ -36,23 +37,9 @@ let humanSize = false;
 let copyToClipboard = false;
 
 
-// ANSI color codes
-const COLOR = {
-  reset: "\x1b[0m",
-  bold: "\x1b[1m",
-  dim: "\x1b[2m",
-  cyan: "\x1b[36m",
-  green: "\x1b[32m",
-  yellow: "\x1b[33m",
-  blue: "\x1b[34m",
-  magenta: "\x1b[35m",
-  gray: "\x1b[90m"
-};
-
-
 function getColor(name, noColorFlag) {
-  if (noColorFlag || process.env.NO_COLOR) return "";
-  return COLOR[name] || "";
+  if (noColorFlag || (process.env.NO_COLOR && process.env.NO_COLOR !== "")) return "";
+  return COLORS[name] || "";
 }
 
 
@@ -123,7 +110,7 @@ function copyToClipboardSync(text) {
   
   // Convert Unicode tree characters to ASCII on Windows
   if (platform === "win32") {
-    icons = 'ascii';
+    iconSet = 'ascii';
     text = text.replace(/[├│└─┌┐]/g, (char) => {
       const treeMap = {
         '├': '|',
@@ -178,14 +165,14 @@ const flagHandlers = {
   "-c": () => { copyToClipboard = true; noColor = true; },
   "--depth": (value) => { 
     if (!value || Number.isNaN(Number(value))) {
-      console.error(`${COLOR.yellow}Invalid value for --depth${COLOR.reset}`);
+      console.error(`${COLORS.yellow}Invalid value for --depth${COLORS.reset}`);
       process.exit(1);
     }
     maxDepth = Number(value); 
   },
   "-d": (value) => { 
     if (!value || Number.isNaN(Number(value))) {
-      console.error(`${COLOR.yellow}Invalid value for --depth${COLOR.reset}`);
+      console.error(`${COLORS.yellow}Invalid value for --depth${COLORS.reset}`);
       process.exit(1);
     }
     maxDepth = Number(value); 
@@ -193,7 +180,7 @@ const flagHandlers = {
   "--dirs-only": () => { dirsOnly = true; },
   "--icons": (value) => {
     if (!value || !["nerd", "emoji", "ascii"].includes(value)) {
-      console.error(`${COLOR.yellow}Invalid value for --icons. Use: nerd, emoji or ascii${COLOR.reset}`);
+      console.error(`${COLORS.yellow}Invalid value for --icons. Use: nerd, emoji or ascii${COLORS.reset}`);
       process.exit(1);
     }
     iconSet = value;
@@ -211,14 +198,22 @@ const flagHandlers = {
 
 
 for (let i = 0; i < args.length; i++) {
-  const arg = args[i];
+  let arg = args[i];
+  let value;
 
+  const eqIdx = arg.indexOf("=");
+  if (eqIdx > 1 && arg.startsWith("--")) {
+    value = arg.slice(eqIdx + 1);
+    arg = arg.slice(0, eqIdx);
+  }
 
   if (flagHandlers[arg]) {
     const opt = OPTIONS.find(o => o.flags.includes(arg));
     if (opt && opt.arg) {
-      const value = args[i + 1];
-      i++;
+      if (value === undefined) {
+        value = args[i + 1];
+        i++;
+      }
       flagHandlers[arg](value);
     } else {
       flagHandlers[arg]();
@@ -233,7 +228,7 @@ for (let i = 0; i < args.length; i++) {
   }
 
 
-  console.error(`${COLOR.yellow}Unknown option: ${arg}${COLOR.reset}`);
+  console.error(`${COLORS.yellow}Unknown option: ${arg}${COLORS.reset}`);
   process.exit(1);
 }
 
@@ -242,7 +237,7 @@ const targetPath = path.resolve(inputPath);
 
 
 if (!fs.existsSync(targetPath)) {
-  console.error(`${COLOR.yellow}Path does not exist: ${inputPath}${COLOR.reset}`);
+  console.error(`${COLORS.yellow}Path does not exist: ${inputPath}${COLORS.reset}`);
   process.exit(1);
 }
 
@@ -251,7 +246,7 @@ const stats = fs.lstatSync(targetPath);
 
 
 if (!stats.isDirectory()) {
-  console.error(`${COLOR.yellow}Path is not a directory: ${inputPath}${COLOR.reset}`);
+  console.error(`${COLORS.yellow}Path is not a directory: ${inputPath}${COLORS.reset}`);
   process.exit(1);
 }
 
@@ -277,7 +272,7 @@ let clipboardSupported = true;
 if (copyToClipboard) {
   const success = copyToClipboardSync(output);
   if (success) {
-    console.error(`${COLOR.green}✓  Copied to clipboard${COLOR.reset}`);
+    console.error(`${COLORS.green}✓  Copied to clipboard${COLORS.reset}`);
   } else {
     clipboardSupported = false;
   }
@@ -285,14 +280,14 @@ if (copyToClipboard) {
 
 
 if (showHidden && process.stdout.isTTY) {
-  console.error(`${COLOR.yellow}⚠️  Warning: --all displayed ALL files (including node_modules, dist, etc.)${COLOR.reset}`);
-  console.error(`${COLOR.yellow}   This can generate thousands of lines. For large outputs, consider:${COLOR.reset}`);
-  console.error(`${COLOR.yellow}   gofiols . --all --no-color > tree.txt${COLOR.reset}`);
+  console.error(`${COLORS.yellow}⚠️  Warning: --all displayed ALL files (including node_modules, dist, etc.)${COLORS.reset}`);
+  console.error(`${COLORS.yellow}   This can generate thousands of lines. For large outputs, consider:${COLORS.reset}`);
+  console.error(`${COLORS.yellow}   gofiols . --all --no-color > tree.txt${COLORS.reset}`);
 }
 
 
 if (!clipboardSupported && process.platform === "linux") {
-  console.error(`${COLOR.yellow}⚠️  Warning: --copy requires a clipboard tool on Linux${COLOR.reset}`);
-  console.error(`${COLOR.yellow}   Install one of: xclip, xsel, or wl-copy (Wayland)${COLOR.reset}`);
-  console.error(`${COLOR.yellow}   Example: sudo apt install xclip${COLOR.reset}`);
+  console.error(`${COLORS.yellow}⚠️  Warning: --copy requires a clipboard tool on Linux${COLORS.reset}`);
+  console.error(`${COLORS.yellow}   Install one of: xclip, xsel, or wl-copy (Wayland)${COLORS.reset}`);
+  console.error(`${COLORS.yellow}   Example: sudo apt install xclip${COLORS.reset}`);
 }
