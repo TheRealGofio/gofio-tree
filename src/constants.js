@@ -15,25 +15,25 @@ const COLORS = {
 };
 
 const NERD_ICONS = {
-  folder: "\u{f024b} ",
-  js: "󰌞 ",
-  ts: "󰛦 ",
-  react: "󰜈 ",
-  style: "󱁢 ",
-  html: "󰌝 ",
-  config: "󱁤 ", 
-  doc: "󰈙 ",
-  image: "󰈟 ",
-  video: "󰕧 ",
-  audio: "󰎆 ",
-  script: "󰆍 ",
-  archive: "󰀼 ",
-  test: "󰙨 ",
-  docker: "󰡨 ",
-  lock: "󰌾 ",
-  hidden: "󰘓 ",
-  misc: "󰈔 ",
-  link: "󰌹 "
+  folder: "\u{f07b} ",
+  js: "\u{f1c9} ",
+  ts: "\u{f1c9} ",
+  react: "\u{f1c9} ",
+  style: "\u{f13c} ",
+  html: "\u{f13b} ",
+  config: "\u{f013} ",
+  doc: "\u{f0f6} ",
+  image: "\u{f1c5} ",
+  video: "\u{f1c8} ",
+  audio: "\u{f1c7} ",
+  script: "\u{f120} ",
+  archive: "\u{f1c6} ",
+  test: "\u{f14a} ",
+  docker: "\u{f21f} ",
+  lock: "\u{f023} ",
+  hidden: "\u{f070} ",
+  misc: "\u{f15b} ",
+  link: "\u{f0c1} "
 };
 
 const EMOJI_ICONS = {

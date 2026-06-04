@@ -9,9 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Nerd Font icons**: Switched from Material Design Plane 15 codepoints (v3+ only) to Font Awesome BMP PUA codepoints, compatible with **all Nerd Font versions** (v2 and v3)
 - **Windows clipboard crash**: ReferenceError on `--copy` due to undeclared variable `icons` (`bin/gofio-tree.js`)
 - **Unreadable directories**: `walk.js` now wraps `readdirSync` in try/catch instead of crashing when permissions are denied
 - **Path validation**: Proper error message when target is a file instead of a directory
+- **README default icons**: Corrected from claiming Nerd Font default to actual emoji default
 
 ### Changed
 

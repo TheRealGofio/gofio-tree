@@ -124,7 +124,7 @@ gofiols . --copy  # automatically disables colors
 
 ## Icons
 
-By default, `gofiols` uses **Nerd Font icons**. If your terminal supports Nerd Fonts, you'll see精美 icons for different file types.
+By default, `gofiols` uses **emoji icons**. You can switch to Nerd Font icons with `--icons nerd` if you have a Nerd Font installed in your terminal.
 
 ### Emoji icons (recommended)
 
@@ -158,7 +158,7 @@ Icon mapping:
 
 ### Nerd Font icons
 
-If you have a Nerd Font installed in your terminal:
+If you have a Nerd Font installed in your terminal (v2 or v3):
 
 ```bash
 gofiols . --icons nerd
