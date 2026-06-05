@@ -32,6 +32,9 @@ gotree . --no-color
 gotree . --copy
 gotree . --all --copy
 gotree . --all --no-color > tree.txt
+gotree . --sort size
+gotree . --sort mtime --reverse
+gotree . --no-gitignore
 ```
 
 ## Options
@@ -46,6 +49,9 @@ gotree . --all --no-color > tree.txt
 | `--dirs-only` | | Show directories only (no files) |
 | `--icons` | | Icon set: `emoji` (default), `nerd`, or `ascii` |
 | `--no-color` | | Disable ANSI colors |
+| `--no-gitignore` | | Disable `.gitignore` rules (ignored files are shown) |
+| `--sort` | | Sort entries by `name`, `size`, or `mtime` (default: `name`) |
+| `-r, --reverse` | `-r` | Reverse sort order |
 | `-h, --help` | `-h` | Show help message |
 | `-v, --version` | `-v` | Show version |
 
@@ -138,24 +144,39 @@ Icon mapping:
 | Icon | Type |
 |------|------|
 | 📁 | Directories |
-| 🟨 | JavaScript files |
-| 📘 | TypeScript files |
-| ⚛️ | React/JSX/TSX/Vue/Svelte/Astro |
-| 🎨 | CSS/SCSS/SASS/LESS/Stylus |
+| 🟨 | JavaScript (.js, .mjs, .cjs) |
+| 📘 | TypeScript (.ts, .mts, .cts) |
+| ⚛️ | JSX/TSX (React) |
+| 💚 | Vue (.vue) |
+| 🧡 | Svelte (.svelte) |
+| 🚀 | Astro (.astro) |
+| 🎨 | Stylesheets (CSS, SCSS, LESS, Stylus) |
 | 🌐 | HTML/MDX |
-| ⚙️ | Config files (JSON, YAML, TOML, etc.) |
-| 📄 | Markdown/Text |
-| 🖼️ | Images (PNG, JPG, SVG, etc.) |
-| 🎬 | Videos (MP4, WebM, MOV, etc.) |
-| 🎵 | Audio (MP3, WAV, FLAC, etc.) |
-| 📜 | Shell scripts (Bash, Zsh, Fish, etc.) |
-| 📦 | Archives (ZIP, TAR, GZ, RAR, etc.) |
-| 🧪 | Test files (*.spec, *.test) |
-| 🐳 | Dockerfiles, docker-compose |
-| 🔒 | Lock files (package-lock.json, yarn.lock, etc.) |
+| 📋 | Templates (EJS, Pug, Handlebars, Liquid, Nunjucks) |
+| 🐘 | PHP |
+| ◈ | GraphQL (.graphql, .gql) |
+| 🐍 | Python (.py, requirements.txt, Pipfile) |
+| 🔷 | Go (.go, go.mod, go.sum) |
+| 🦀 | Rust (.rs, Cargo.toml) |
+| 💎 | Ruby (.rb, Gemfile, Rakefile) |
+| 🗄️ | Database (SQL, Prisma, Drizzle, SQLite) |
+| 🔧 | Environment files (.env, .env.*) |
+| ⚙️ | Config files (JSON, YAML, TOML, INI, etc.) |
+| ☁️ | Serverless (serverless.yml, vercel.json, netlify.toml) |
+| 📄 | Documents (Markdown, text, RST, AsciiDoc) |
+| 🖼️ | Images (PNG, JPG, SVG, GIF, WebP, fonts) |
+| 🎬 | Videos (MP4, WebM, MOV, AVI, MKV) |
+| 🎵 | Audio (MP3, WAV, OGG, FLAC, AAC) |
+| 📜 | Shell scripts (Bash, Zsh, Fish, PowerShell) |
+| 📦 | Archives (ZIP, TAR, GZ, RAR, 7z) |
+| 🐳 | Docker / Make / Just |
+| 🔒 | Lock files (package-lock, yarn.lock, Cargo.lock, etc.) |
+| 🧪 | Test files — detected **before** language type |
 | 👻 | Hidden files (starting with `.`) |
 | 📌 | Other files |
 | 🔗 | Symlinks |
+
+> **Classification priority**: Test files (`*.spec.*`, `*.test.*`) take precedence over language-specific icons. A file like `Component.test.tsx` shows the test icon (🧪/) rather than the React icon. This ensures tests are visually identifiable regardless of their source language.
 
 ### Nerd Font icons
 
@@ -164,6 +185,42 @@ If you have a Nerd Font installed in your terminal (v2 or v3):
 ```bash
 gotree . --icons nerd
 ```
+
+Icon mapping (codepoints from Devicons and Font Awesome, all in BMP PUA range):
+
+| Icon | Codepoint | Type |
+|------|-----------|------|
+|  | `\u{f07b}` | Directories |
+|  | `\u{e781}` | JavaScript (.js, .mjs, .cjs) |
+|  | `\u{e8ca}` | TypeScript (.ts, .mts, .cts) |
+|  | `\u{e7ba}` | JSX/TSX (React) |
+|  | `\u{e8dc}` | Vue (.vue) |
+|  | `\u{e8b7}` | Svelte (.svelte) |
+|  | `\u{e735}` | Astro (.astro) |
+|  | `\u{f13c}` | Stylesheets (CSS, SCSS, LESS, Stylus) |
+|  | `\u{f13b}` | HTML/MDX |
+|  | `\u{f1c9}` | Templates (EJS, Pug, Handlebars, Liquid, Nunjucks) |
+|  | `\u{e73d}` | PHP |
+|  | `\u{e7f4}` | GraphQL (.graphql, .gql) |
+|  | `\u{e73c}` | Python (.py, requirements.txt, Pipfile) |
+|  | `\u{e724}` | Go (.go, go.mod, go.sum) |
+|  | `\u{e7a8}` | Rust (.rs, Cargo.toml) |
+|  | `\u{e739}` | Ruby (.rb, Gemfile, Rakefile) |
+|  | `\u{f1c0}` | Database (SQL, Prisma, Drizzle, SQLite) |
+|  | `\u{f013}` | Config files (JSON, YAML, TOML, INI, etc.) |
+|  | `\u{f0c2}` | Serverless (serverless.yml, vercel.json, netlify.toml) |
+|  | `\u{f0f6}` | Documents (Markdown, text, RST, AsciiDoc) |
+|  | `\u{f1c5}` | Images (PNG, JPG, SVG, GIF, WebP, fonts) |
+|  | `\u{f1c8}` | Videos (MP4, WebM, MOV, AVI, MKV) |
+|  | `\u{f1c7}` | Audio (MP3, WAV, OGG, FLAC, AAC) |
+|  | `\u{f120}` | Shell scripts (Bash, Zsh, Fish, PowerShell) |
+|  | `\u{f1c6}` | Archives (ZIP, TAR, GZ, RAR, 7z) |
+|  | `\u{e7b0}` | Docker / Make / Just |
+|  | `\u{f023}` | Lock files (package-lock, yarn.lock, Cargo.lock, etc.) |
+|  | `\u{f14a}` | Test files — detected **before** language type |
+|  | `\u{f070}` | Hidden files (starting with `.`) |
+|  | `\u{f15b}` | Other files |
+|  | `\u{f0c1}` | Symlinks |
 
 ### ASCII mode (no icons)
 

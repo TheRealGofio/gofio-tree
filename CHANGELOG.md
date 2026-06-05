@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`.gitignore` support**: Directories and files matching `.gitignore` patterns are automatically excluded. Rules from parent directories are also honored. Use `--no-gitignore` to disable.
+- **`--sort` flag**: Sort entries by `name`, `size`, or `mtime` (`--sort size --reverse` for largest/latest first).
+- **`-r, --reverse` flag**: Reverse sort order (works with `--sort` or standalone to reverse the default name sort).
+- **`--no-gitignore` flag**: Bypass `.gitignore` rules while still hiding dotfiles.
+- **File type expansion**: 10 new categories — Python, Go, Rust, PHP, Ruby, Database/SQL/Prisma, GraphQL, Environment files, Templates (EJS/Pug/Handlebars/Liquid/Nunjucks), Serverless configs
+- **Framework-specific icons**: Vue, Svelte, and Astro files now have distinct icons instead of sharing the React icon
+- **Nerd Font Devicons**: Technology files show actual language/framework logos (React atom, Python snake, Go gopher, Rust crab, etc.) with `--icons nerd`
+- **Expanded config detection**: Added `tailwind.config.*`, `postcss.config.*`, `eslint.config.*`, `next.config.*`, `playwright.config.*`, `cypress.config.*`, `svelte.config.*`, `nuxt.config.*` and more
+- **More lock files**: `composer.lock`, `Gemfile.lock` now recognized
+- **More default ignores**: Added `__pycache__`, `.venv`, `venv`, `.terraform`, `.serverless`
+
+### Changed
+
+- **Classification priority reordered**: Lock files (e.g., `package-lock.json`), Docker (`docker-compose.yml`), and Serverless (`vercel.json`) are now checked **before** the generic config (`*.json`, `*.yaml`) rule, preventing misclassification
+
 ### Fixed
 
 - **Nerd Font icons**: Switched from Material Design Plane 15 codepoints (v3+ only) to Font Awesome BMP PUA codepoints, compatible with **all Nerd Font versions** (v2 and v3)

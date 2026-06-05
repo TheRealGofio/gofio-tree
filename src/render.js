@@ -86,8 +86,23 @@ function classify(name, entry, colors, icons) {
   }
 
 
-  if (/\.(jsx|tsx|vue|svelte|astro)$/i.test(name)) {
+  if (/\.(jsx|tsx)$/i.test(name)) {
     return { color: colors.magenta, icon: icons.react, suffix: "" };
+  }
+
+
+  if (/\.(vue)$/i.test(name)) {
+    return { color: colors.green, icon: icons.vue, suffix: "" };
+  }
+
+
+  if (/\.(svelte)$/i.test(name)) {
+    return { color: colors.orange, icon: icons.svelte, suffix: "" };
+  }
+
+
+  if (/\.(astro)$/i.test(name)) {
+    return { color: colors.magenta, icon: icons.astro, suffix: "" };
   }
 
 
@@ -101,9 +116,72 @@ function classify(name, entry, colors, icons) {
   }
 
 
+  if (/\.(ejs|pug|jade|hbs|handlebars|liquid|njk|mustache)$/i.test(name)) {
+    return { color: colors.cyan, icon: icons.template, suffix: "" };
+  }
+
+
+  if (/\.(php|phtml)$/i.test(name)) {
+    return { color: colors.purple, icon: icons.php, suffix: "" };
+  }
+
+
+  if (/\.(graphql|gql)$/i.test(name)) {
+    return { color: colors.magenta, icon: icons.graphql, suffix: "" };
+  }
+
+
+  if (/\.(py|pyw|pyx)$/i.test(name) || /^(requirements\.txt|Pipfile|setup\.py)$/i.test(name)) {
+    return { color: colors.blue, icon: icons.python, suffix: "" };
+  }
+
+
+  if (/\.(go)$/i.test(name) || /^(go\.mod|go\.sum)$/i.test(name)) {
+    return { color: colors.cyan, icon: icons.go, suffix: "" };
+  }
+
+
+  if (/\.(rs)$/i.test(name) || /^(Cargo\.toml)$/i.test(name)) {
+    return { color: colors.orange, icon: icons.rust, suffix: "" };
+  }
+
+
+  if (/\.(rb|erb)$/i.test(name) || /^(Gemfile|Rakefile)$/i.test(name)) {
+    return { color: colors.red, icon: icons.ruby, suffix: "" };
+  }
+
+
+  if (/\.(sql|prisma|drizzle)$/i.test(name) || /\.(db|sqlite|duckdb)$/i.test(name)) {
+    return { color: colors.purple, icon: icons.database, suffix: "" };
+  }
+
+
+  if (/^\.env/.test(name)) {
+    return { color: colors.yellow, icon: icons.env, suffix: "" };
+  }
+
+
+  // Lock files before config (package-lock.json ends in .json)
+  if (/^(yarn\.lock|package-lock\.json|pnpm-lock\.yaml|bun\.lockb|Cargo\.lock|composer\.lock|Gemfile\.lock)$/i.test(name)) {
+    return { color: colors.bold + colors.white, icon: icons.lock, suffix: "" };
+  }
+
+
+  // Docker before config (docker-compose.yml ends in .yml)
+  if (/^(Dockerfile|docker-compose\.ya?ml|\.dockerignore|Makefile|Justfile)$/i.test(name)) {
+    return { color: colors.bold + colors.blue, icon: icons.docker, suffix: "" };
+  }
+
+
+  // Serverless before config (vercel.json ends in .json)
+  if (/^(serverless\.ya?ml|netlify\.toml|vercel\.json|now\.json)$/i.test(name)) {
+    return { color: colors.bold + colors.blue, icon: icons.serverless, suffix: "" };
+  }
+
+
   if (
-    /\.(json|jsonc|yaml|yml|toml|ini|conf|env)$/i.test(name) ||
-    /^(\.eslintrc|\.prettierrc|tsconfig\.json|vite\.config|webpack\.config|rollup\.config|vitest\.config|jest\.config)/i.test(name)
+    /\.(json|jsonc|yaml|yml|toml|ini|conf)$/i.test(name) ||
+    /^(\.eslintrc|\.prettierrc|eslint\.config|prettier\.config|tsconfig\.json|tailwind\.config|postcss\.config|stylelint\.config|commitlint\.config|lint-staged\.config|playwright\.config|cypress\.config|vite\.config|webpack\.config|rollup\.config|vitest\.config|jest\.config|next\.config|nuxt\.config|svelte\.config|astro\.config|remix\.config|gatsby\.config)/i.test(name)
   ) {
     return { color: colors.bold + colors.green, icon: icons.config, suffix: "" };
   }
@@ -136,16 +214,6 @@ function classify(name, entry, colors, icons) {
 
   if (/\.(gz|zip|tar|rar|7z|xz|bz2)$/i.test(name)) {
     return { color: colors.red, icon: icons.archive, suffix: "" };
-  }
-
-
-  if (/^(Dockerfile|docker-compose\.ya?ml|Makefile|Justfile)$/i.test(name)) {
-    return { color: colors.bold + colors.blue, icon: icons.docker, suffix: "" };
-  }
-
-
-  if (/^(yarn\.lock|package-lock\.json|pnpm-lock\.yaml|bun\.lockb|Cargo\.lock)$/i.test(name)) {
-    return { color: colors.bold + colors.white, icon: icons.lock, suffix: "" };
   }
 
 

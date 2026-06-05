@@ -20,6 +20,9 @@ const OPTIONS = [
   { flags: ["--no-color"], arg: false, desc: "Disable ANSI colors" },
   { flags: ["-s", "--size"], arg: false, desc: "Show file sizes in bytes" },
   { flags: ["-H", "--human"], arg: false, desc: "Show file sizes in human-readable format (B, KB, MB, GB)" },
+  { flags: ["--no-gitignore"], arg: false, desc: "Disable .gitignore rules" },
+  { flags: ["--sort"], arg: true, desc: "Sort entries by", placeholder: "<field>", values: ["name", "size", "mtime"] },
+  { flags: ["-r", "--reverse"], arg: false, desc: "Reverse sort order" },
   { flags: ["-h", "--help"], arg: false, desc: "Show help message" },
   { flags: ["-v", "--version"], arg: false, desc: "Show version" }
 ];
@@ -35,6 +38,9 @@ let iconSet = "emoji";
 let showSize = false;
 let humanSize = false;
 let copyToClipboard = false;
+let useGitignore = true;
+let sortBy = "name";
+let sortReverse = false;
 
 
 function getColor(name, noColorFlag) {
@@ -192,6 +198,16 @@ const flagHandlers = {
   "-H": () => { showSize = true; humanSize = true; },
   "--help": () => { printHelp(); process.exit(0); },
   "-h": () => { printHelp(); process.exit(0); },
+  "--no-gitignore": () => { useGitignore = false; },
+  "--sort": (value) => {
+    if (!value || !["name", "size", "mtime"].includes(value)) {
+      console.error(`${COLORS.yellow}Invalid value for --sort. Use: name, size or mtime${COLORS.reset}`);
+      process.exit(1);
+    }
+    sortBy = value;
+  },
+  "--reverse": () => { sortReverse = true; },
+  "-r": () => { sortReverse = true; },
   "--version": () => { console.log(packageJson.version); process.exit(0); },
   "-v": () => { console.log(packageJson.version); process.exit(0); }
 };
@@ -258,7 +274,10 @@ const output = gofioTree(targetPath, {
   dirsOnly,
   icons: iconSet,
   showSize,
-  humanSize
+  humanSize,
+  useGitignore,
+  sortBy,
+  sortReverse
 });
 
 
