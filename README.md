@@ -9,11 +9,17 @@ gotree      # recommended
 gofiols     # alias
 ```
 
-Set the default icon set via the `GOTREE_ICONS` environment variable:
-```bash
-export GOTREE_ICONS=nerd   # in .bashrc, .zshrc, etc.
-gotree .                   # uses Nerd Font icons without --icons nerd
+Set the default icon set per project via `.gotreerc` (JSON):
+```json
+{ "icons": "nerd" }
 ```
+
+Or globally via the `GOTREE_ICONS` environment variable:
+```bash
+export GOTREE_ICONS=nerd   # in ~/.bashrc, ~/.zshrc, etc.
+```
+
+Precedence: `--icons` flag > `.gotreerc` > `GOTREE_ICONS` > emoji (default).
 
 ## Installation
 
