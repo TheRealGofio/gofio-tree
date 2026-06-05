@@ -45,3 +45,4 @@ coverage/
 .cache/
 .turbo/
 .bashrc
+.gotreerc

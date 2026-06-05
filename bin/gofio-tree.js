@@ -115,7 +115,7 @@ ${c.bold}Examples:${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--icons nerd${c.reset}       ${c.dim}# Nerd Font icons${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--no-color > tree.txt${c.reset}  ${c.dim}# Save to file${c.reset}
 
-${c.dim}Env / Config:${c.reset} ${c.yellow}GOTREE_ICONS${c.dim} or ${c.yellow}.gotreerc${c.dim} ({\"icons\":\"nerd\"}) — default icon set${c.reset}
+${c.dim}Config:${c.reset} Set ${c.yellow}GOTREE_ICONS${c.dim} env var or create ${c.yellow}.gotreerc${c.dim} with ${c.green}{\"icons\":\"nerd\"}${c.dim} for default icon set${c.reset}
 
 ${c.dim}Published as${c.reset} ${c.yellow}gofio-tree${c.dim} on npm — commands:${c.reset} ${c.cyan}gotree${c.dim} (recommended) /${c.reset} ${c.cyan}gofiols${c.dim} (alias)${c.reset}
 `.trim();
