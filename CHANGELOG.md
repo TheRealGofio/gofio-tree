@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **ANSI colors**: Unified color definitions — `bin/gofio-tree.js` now imports `COLORS` from `src/constants.js` instead of maintaining a duplicate map
 - **`NO_COLOR` handling**: Consolidated empty-string check across both modules
 - **`--option=value` syntax**: Arguments like `--depth=2` or `--icons=emoji` now work alongside the space-separated form
+- **New command `gotree`**: Added as primary command alongside existing `gofiols` alias — help text, README, and examples updated
 
 ## [0.1.3] - 2026-05-28
 

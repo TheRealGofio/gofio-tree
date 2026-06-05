@@ -77,26 +77,26 @@ function printHelp() {
 
 
   const helpText = `
-${c.bold}${c.cyan}gofiols${c.reset} ${packageJson.version}
+${c.bold}${c.cyan}gotree${c.reset} ${packageJson.version}
 ${c.dim}A vibe-coded tool for learning purposes${c.reset}
 
 ${c.bold}Usage:${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}[path]${c.reset} ${c.dim}[options]${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}[path]${c.reset} ${c.dim}[options]${c.reset}
 
 ${c.bold}Options:${c.reset}
 ${optionsLines}
 
 ${c.bold}Examples:${c.reset}
-  ${c.green}gofiols${c.reset}                    ${c.dim}# Current directory${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}.${c.reset}                  ${c.dim}# Explicit path${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}src --depth 2${c.reset}      ${c.dim}# Limit depth${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}--all${c.reset}              ${c.dim}# Show everything${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}--human${c.reset}            ${c.dim}# Human-readable sizes${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}--copy${c.reset}             ${c.dim}# Copy to clipboard${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}--icons nerd${c.reset}       ${c.dim}# Nerd Font icons${c.reset}
-  ${c.green}gofiols${c.reset} ${c.dim}--no-color > tree.txt${c.reset}  ${c.dim}# Save to file${c.reset}
+  ${c.green}gotree${c.reset}                    ${c.dim}# Current directory${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}.${c.reset}                  ${c.dim}# Explicit path${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}src --depth 2${c.reset}      ${c.dim}# Limit depth${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}--all${c.reset}              ${c.dim}# Show everything${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}--human${c.reset}            ${c.dim}# Human-readable sizes${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}--copy${c.reset}             ${c.dim}# Copy to clipboard${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}--icons nerd${c.reset}       ${c.dim}# Nerd Font icons${c.reset}
+  ${c.green}gotree${c.reset} ${c.dim}--no-color > tree.txt${c.reset}  ${c.dim}# Save to file${c.reset}
 
-${c.dim}Published as${c.reset} ${c.yellow}gofio-tree${c.dim} on npm, command is${c.reset} ${c.cyan}gofiols${c.reset}
+${c.dim}Published as${c.reset} ${c.yellow}gofio-tree${c.dim} on npm — commands:${c.reset} ${c.cyan}gotree${c.dim} (recommended) /${c.reset} ${c.cyan}gofiols${c.dim} (alias)${c.reset}
 `.trim();
 
 
@@ -282,7 +282,7 @@ if (copyToClipboard) {
 if (showHidden && process.stdout.isTTY) {
   console.error(`${COLORS.yellow}⚠️  Warning: --all displayed ALL files (including node_modules, dist, etc.)${COLORS.reset}`);
   console.error(`${COLORS.yellow}   This can generate thousands of lines. For large outputs, consider:${COLORS.reset}`);
-  console.error(`${COLORS.yellow}   gofiols . --all --no-color > tree.txt${COLORS.reset}`);
+  console.error(`${COLORS.yellow}   gotree . --all --no-color > tree.txt${COLORS.reset}`);
 }
 
 

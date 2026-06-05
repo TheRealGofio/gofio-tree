@@ -2,10 +2,11 @@
 
 A vibe-coded tool for learning purposes – CLI for rendering directory trees with icons and colors.
 
-The package is published as `gofio-tree` and the installed command is:
+The package is published as `gofio-tree` and provides two commands:
 
 ```bash
-gofiols
+gotree      # recommended
+gofiols     # alias
 ```
 
 ## Installation
@@ -17,20 +18,20 @@ npm install -g gofio-tree
 ## Usage
 
 ```bash
-gofiols
-gofiols .
-gofiols src --depth 2
-gofiols . --all
-gofiols . --dirs-only
-gofiols . --size
-gofiols . --human
-gofiols . --icons emoji
-gofiols . --icons nerd
-gofiols . --icons ascii
-gofiols . --no-color
-gofiols . --copy
-gofiols . --all --copy
-gofiols . --all --no-color > tree.txt
+gotree
+gotree .
+gotree src --depth 2
+gotree . --all
+gotree . --dirs-only
+gotree . --size
+gotree . --human
+gotree . --icons emoji
+gotree . --icons nerd
+gotree . --icons ascii
+gotree . --no-color
+gotree . --copy
+gotree . --all --copy
+gotree . --all --no-color > tree.txt
 ```
 
 ## Options
@@ -54,82 +55,82 @@ gofiols . --all --no-color > tree.txt
 
 ```bash
 # Show tree of current directory
-gofiols
+gotree
 
 # Show tree of specific path
-gofiols src
+gotree src
 
 # Limit depth to 2 levels
-gofiols . --depth 2
+gotree . --depth 2
 
 # Show only directories
-gofiols . --dirs-only
+gotree . --dirs-only
 ```
 
 ### Show everything (including hidden and ignored)
 
 ```bash
 # Show hidden files + node_modules + dist + everything
-gofiols . --all
+gotree . --all
 
 # Warning: this can generate thousands of lines!
-gofiols . --all --no-color > tree.txt
+gotree . --all --no-color > tree.txt
 ```
 
 ### Show file sizes
 
 ```bash
 # Show sizes in bytes
-gofiols . --size
+gotree . --size
 
 # Show sizes in human-readable format (includes directory totals)
-gofiols . --human
-gofiols . -H
+gotree . --human
+gotree . -H
 ```
 
 ### Copy to clipboard
 
 ```bash
 # Copy tree to clipboard (clean text, no colors)
-gofiols . --copy
-gofiols . -c
+gotree . --copy
+gotree . -c
 
 # Copy full tree including node_modules
-gofiols . --all --copy
+gotree . --all --copy
 
 # On Windows, use ASCII icons for better clipboard compatibility
-gofiols . --icons ascii --copy
+gotree . --icons ascii --copy
 ```
 
 ### Different icon sets
 
 ```bash
 # Emoji icons (recommended)
-gofiols . --icons emoji
+gotree . --icons emoji
 
 # Nerd Font icons (requires Nerd Font terminal)
-gofiols . --icons nerd
+gotree . --icons nerd
 
 # ASCII only (no icons, works everywhere, good for Windows)
-gofiols . --icons ascii
+gotree . --icons ascii
 ```
 
 ### Disable colors
 
 ```bash
 # For piping to files or when colors don't work
-gofiols . --no-color
-gofiols . --copy  # automatically disables colors
+gotree . --no-color
+gotree . --copy  # automatically disables colors
 ```
 
 ## Icons
 
-By default, `gofiols` uses **emoji icons**. You can switch to Nerd Font icons with `--icons nerd` if you have a Nerd Font installed in your terminal.
+By default, `gotree` uses **emoji icons**. You can switch to Nerd Font icons with `--icons nerd` if you have a Nerd Font installed in your terminal.
 
 ### Emoji icons (recommended)
 
 ```bash
-gofiols . --icons emoji
+gotree . --icons emoji
 ```
 
 Icon mapping:
@@ -161,7 +162,7 @@ Icon mapping:
 If you have a Nerd Font installed in your terminal (v2 or v3):
 
 ```bash
-gofiols . --icons nerd
+gotree . --icons nerd
 ```
 
 ### ASCII mode (no icons)
@@ -169,7 +170,7 @@ gofiols . --icons nerd
 If icons don't render correctly:
 
 ```bash
-gofiols . --icons ascii
+gotree . --icons ascii
 ```
 
 Example output:

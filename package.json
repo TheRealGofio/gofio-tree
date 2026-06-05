@@ -17,6 +17,7 @@
     "icons"
   ],
   "bin": {
+    "gotree": "bin/gofio-tree.js",
     "gofiols": "bin/gofio-tree.js"
   },
   "files": [
