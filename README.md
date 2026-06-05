@@ -9,10 +9,10 @@ gotree      # recommended
 gofiols     # alias
 ```
 
-Puedes configurar el icon set por defecto con la variable de entorno `GOTREE_ICONS`:
+Set the default icon set via the `GOTREE_ICONS` environment variable:
 ```bash
-export GOTREE_ICONS=nerd   # en .bashrc, .zshrc, etc.
-gotree .                   # usará Nerd Font icons sin --icons nerd
+export GOTREE_ICONS=nerd   # in .bashrc, .zshrc, etc.
+gotree .                   # uses Nerd Font icons without --icons nerd
 ```
 
 ## Installation
