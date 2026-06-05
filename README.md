@@ -9,6 +9,12 @@ gotree      # recommended
 gofiols     # alias
 ```
 
+Puedes configurar el icon set por defecto con la variable de entorno `GOTREE_ICONS`:
+```bash
+export GOTREE_ICONS=nerd   # en .bashrc, .zshrc, etc.
+gotree .                   # usará Nerd Font icons sin --icons nerd
+```
+
 ## Installation
 
 ```bash
@@ -49,6 +55,7 @@ gotree . --no-gitignore
 | `--dirs-only` | | Show directories only (no files) |
 | `--icons` | | Icon set: `emoji` (default), `nerd`, or `ascii` |
 | `--no-color` | | Disable ANSI colors |
+| `GOTREE_ICONS` | *(env)* | Default icon set: `nerd`, `emoji`, or `ascii` (overridable by `--icons`) |
 | `--no-gitignore` | | Disable `.gitignore` rules (ignored files are shown) |
 | `--sort` | | Sort entries by `name`, `size`, or `mtime` (default: `name`) |
 | `-r, --reverse` | `-r` | Reverse sort order |

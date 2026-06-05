@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **File type expansion**: 10 new categories — Python, Go, Rust, PHP, Ruby, Database/SQL/Prisma, GraphQL, Environment files, Templates (EJS/Pug/Handlebars/Liquid/Nunjucks), Serverless configs
 - **Framework-specific icons**: Vue, Svelte, and Astro files now have distinct icons instead of sharing the React icon
 - **Nerd Font Devicons**: Technology files show actual language/framework logos (React atom, Python snake, Go gopher, Rust crab, etc.) with `--icons nerd`
+- **`GOTREE_ICONS` env var**: Set default icon set via environment variable (`export GOTREE_ICONS=nerd`); overridable by `--icons` flag
 - **Expanded config detection**: Added `tailwind.config.*`, `postcss.config.*`, `eslint.config.*`, `next.config.*`, `playwright.config.*`, `cypress.config.*`, `svelte.config.*`, `nuxt.config.*` and more
 - **More lock files**: `composer.lock`, `Gemfile.lock` now recognized
 - **More default ignores**: Added `__pycache__`, `.venv`, `venv`, `.terraform`, `.serverless`

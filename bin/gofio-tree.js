@@ -34,7 +34,9 @@ let maxDepth = 99;
 let noColor = false;
 let showHidden = false;
 let dirsOnly = false;
-let iconSet = "emoji";
+let iconSet = ["nerd", "emoji", "ascii"].includes(process.env.GOTREE_ICONS)
+  ? process.env.GOTREE_ICONS
+  : "emoji";
 let showSize = false;
 let humanSize = false;
 let copyToClipboard = false;
@@ -101,6 +103,8 @@ ${c.bold}Examples:${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--copy${c.reset}             ${c.dim}# Copy to clipboard${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--icons nerd${c.reset}       ${c.dim}# Nerd Font icons${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--no-color > tree.txt${c.reset}  ${c.dim}# Save to file${c.reset}
+
+${c.dim}Env:${c.reset} ${c.yellow}GOTREE_ICONS${c.dim} (nerd|emoji|ascii) — default icon set${c.reset}
 
 ${c.dim}Published as${c.reset} ${c.yellow}gofio-tree${c.dim} on npm — commands:${c.reset} ${c.cyan}gotree${c.dim} (recommended) /${c.reset} ${c.cyan}gofiols${c.dim} (alias)${c.reset}
 `.trim();
