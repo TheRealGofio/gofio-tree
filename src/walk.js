@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { DEFAULT_IGNORES } = require("./constants");
+const { createGitignoreFilter } = require("./gitignore");
 
 
 function computeDirSizes(entries) {
@@ -47,20 +48,55 @@ function computeSizeRecursive(relPath, children, sizeCache) {
 }
 
 
+function makeSortComparator(sortBy, sortReverse) {
+  return function compare(a, b, statsA, statsB) {
+    const aDir = statsA.isDirectory();
+    const bDir = statsB.isDirectory();
+
+    if (aDir && !bDir) return -1;
+    if (!aDir && bDir) return 1;
+
+    let cmp;
+    if (sortBy === "size") {
+      cmp = statsA.size - statsB.size;
+    } else if (sortBy === "mtime") {
+      cmp = statsA.mtimeMs - statsB.mtimeMs;
+    } else {
+      cmp = a.name.localeCompare(b.name);
+    }
+
+    return sortReverse ? -cmp : cmp;
+  };
+}
+
+
 function walkTree(rootDir, options = {}) {
   const maxDepth = options.maxDepth ?? 99;
   const showHidden = options.showHidden ?? false;
   const dirsOnly = options.dirsOnly ?? false;
   const showSize = options.showSize ?? false;
+  const useGitignore = options.useGitignore ?? true;
+  const sortBy = options.sortBy ?? "name";
+  const sortReverse = options.sortReverse ?? false;
+
   const ignores = showHidden ? new Set() : (options.ignores ?? DEFAULT_IGNORES);
+  const gitignoreFilter = useGitignore && !showHidden ? createGitignoreFilter(rootDir) : null;
   const entries = [];
   const statsCache = new Map();
+  const comparator = makeSortComparator(sortBy, sortReverse);
 
   function getStats(fullPath) {
     if (!statsCache.has(fullPath)) {
       statsCache.set(fullPath, fs.lstatSync(fullPath));
     }
     return statsCache.get(fullPath);
+  }
+
+  function isIgnored(fullPath, relPath, name, isDir) {
+    if (!showHidden && name.startsWith(".")) return true;
+    if (ignores.has(name)) return true;
+    if (gitignoreFilter && !gitignoreFilter(relPath)) return true;
+    return false;
   }
 
 
@@ -76,17 +112,9 @@ function walkTree(rootDir, options = {}) {
 
     const visibleEntries = dirEntries
       .filter((entry) => {
-        if (!showHidden && entry.name.startsWith(".")) {
-          return false;
-        }
-
-
-        if (ignores.has(entry.name)) {
-          return false;
-        }
-
-
-        return true;
+        const fullPath = path.join(currentPath, entry.name);
+        const relPath = path.relative(rootDir, fullPath);
+        return !isIgnored(fullPath, relPath, entry.name, entry.isDirectory());
       })
       .sort((a, b) => {
         const aFull = path.join(currentPath, a.name);
@@ -95,14 +123,8 @@ function walkTree(rootDir, options = {}) {
         const aStats = getStats(aFull);
         const bStats = getStats(bFull);
 
-        const aDir = aStats.isDirectory();
-        const bDir = bStats.isDirectory();
-
-        if (aDir && !bDir) return -1;
-        if (!aDir && bDir) return 1;
-        return a.name.localeCompare(b.name);
+        return comparator(a, b, aStats, bStats);
       });
-
 
     for (const entry of visibleEntries) {
       const fullPath = path.join(currentPath, entry.name);
@@ -110,11 +132,7 @@ function walkTree(rootDir, options = {}) {
       const stats = getStats(fullPath);
       const entryDepth = currentDepth + 1;
 
-
-      if (entryDepth > maxDepth) {
-        continue;
-      }
-
+      if (entryDepth > maxDepth) continue;
 
       const entryData = {
         fullPath,
@@ -123,14 +141,13 @@ function walkTree(rootDir, options = {}) {
         depth: entryDepth,
         isDirectory: stats.isDirectory(),
         isSymlink: stats.isSymbolicLink(),
-        size: stats.size
+        size: stats.size,
+        mtimeMs: stats.mtimeMs
       };
-
 
       if (!dirsOnly || entryData.isDirectory) {
         entries.push(entryData);
       }
-
 
       if (stats.isDirectory() && !stats.isSymbolicLink()) {
         visit(fullPath, entryDepth);
@@ -138,11 +155,10 @@ function walkTree(rootDir, options = {}) {
     }
   }
 
-
   visit(rootDir, 0);
 
   if (showSize) {
-    computeDirSizes(entries, ignores, showHidden);
+    computeDirSizes(entries);
   }
 
   return entries;

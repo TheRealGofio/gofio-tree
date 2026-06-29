@@ -44,3 +44,5 @@ coverage/
 # Cache
 .cache/
 .turbo/
+.bashrc
+.gotreerc

@@ -20,6 +20,9 @@ const OPTIONS = [
   { flags: ["--no-color"], arg: false, desc: "Disable ANSI colors" },
   { flags: ["-s", "--size"], arg: false, desc: "Show file sizes in bytes" },
   { flags: ["-H", "--human"], arg: false, desc: "Show file sizes in human-readable format (B, KB, MB, GB)" },
+  { flags: ["--no-gitignore"], arg: false, desc: "Disable .gitignore rules" },
+  { flags: ["--sort"], arg: true, desc: "Sort entries by", placeholder: "<field>", values: ["name", "size", "mtime"] },
+  { flags: ["-r", "--reverse"], arg: false, desc: "Reverse sort order" },
   { flags: ["-h", "--help"], arg: false, desc: "Show help message" },
   { flags: ["-v", "--version"], arg: false, desc: "Show version" }
 ];
@@ -35,6 +38,22 @@ let iconSet = "emoji";
 let showSize = false;
 let humanSize = false;
 let copyToClipboard = false;
+let useGitignore = true;
+let sortBy = "name";
+let sortReverse = false;
+
+// Load local config from .gotreerc (overrides env var, overridden by CLI flags)
+const configPath = path.join(process.cwd(), ".gotreerc");
+let localConfig = {};
+try {
+  localConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+} catch { /* no config file */ }
+
+if (localConfig.icons && ["nerd", "emoji", "ascii"].includes(localConfig.icons)) {
+  iconSet = localConfig.icons;
+} else if (["nerd", "emoji", "ascii"].includes(process.env.GOTREE_ICONS)) {
+  iconSet = process.env.GOTREE_ICONS;
+}
 
 
 function getColor(name, noColorFlag) {
@@ -95,6 +114,8 @@ ${c.bold}Examples:${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--copy${c.reset}             ${c.dim}# Copy to clipboard${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--icons nerd${c.reset}       ${c.dim}# Nerd Font icons${c.reset}
   ${c.green}gotree${c.reset} ${c.dim}--no-color > tree.txt${c.reset}  ${c.dim}# Save to file${c.reset}
+
+${c.dim}Config:${c.reset} Set ${c.yellow}GOTREE_ICONS${c.dim} env var or create ${c.yellow}.gotreerc${c.dim} with ${c.green}{\"icons\":\"nerd\"}${c.dim} for default icon set${c.reset}
 
 ${c.dim}Published as${c.reset} ${c.yellow}gofio-tree${c.dim} on npm — commands:${c.reset} ${c.cyan}gotree${c.dim} (recommended) /${c.reset} ${c.cyan}gofiols${c.dim} (alias)${c.reset}
 `.trim();
@@ -192,6 +213,16 @@ const flagHandlers = {
   "-H": () => { showSize = true; humanSize = true; },
   "--help": () => { printHelp(); process.exit(0); },
   "-h": () => { printHelp(); process.exit(0); },
+  "--no-gitignore": () => { useGitignore = false; },
+  "--sort": (value) => {
+    if (!value || !["name", "size", "mtime"].includes(value)) {
+      console.error(`${COLORS.yellow}Invalid value for --sort. Use: name, size or mtime${COLORS.reset}`);
+      process.exit(1);
+    }
+    sortBy = value;
+  },
+  "--reverse": () => { sortReverse = true; },
+  "-r": () => { sortReverse = true; },
   "--version": () => { console.log(packageJson.version); process.exit(0); },
   "-v": () => { console.log(packageJson.version); process.exit(0); }
 };
@@ -258,7 +289,10 @@ const output = gofioTree(targetPath, {
   dirsOnly,
   icons: iconSet,
   showSize,
-  humanSize
+  humanSize,
+  useGitignore,
+  sortBy,
+  sortReverse
 });
 
 

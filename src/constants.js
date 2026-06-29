@@ -16,9 +16,12 @@ const COLORS = {
 
 const NERD_ICONS = {
   folder: "\u{f07b} ",
-  js: "\u{f1c9} ",
-  ts: "\u{f1c9} ",
-  react: "\u{f1c9} ",
+  js: "\u{e781} ",
+  ts: "\u{e8ca} ",
+  react: "\u{e7ba} ",
+  vue: "\u{e8dc} ",
+  svelte: "\u{e8b7} ",
+  astro: "\u{e735} ",
   style: "\u{f13c} ",
   html: "\u{f13b} ",
   config: "\u{f013} ",
@@ -29,11 +32,21 @@ const NERD_ICONS = {
   script: "\u{f120} ",
   archive: "\u{f1c6} ",
   test: "\u{f14a} ",
-  docker: "\u{f21f} ",
+  docker: "\u{e7b0} ",
   lock: "\u{f023} ",
   hidden: "\u{f070} ",
   misc: "\u{f15b} ",
-  link: "\u{f0c1} "
+  link: "\u{f0c1} ",
+  database: "\u{f1c0} ",
+  graphql: "\u{e7f4} ",
+  python: "\u{e73c} ",
+  go: "\u{e724} ",
+  rust: "\u{e7a8} ",
+  php: "\u{e73d} ",
+  ruby: "\u{e739} ",
+  env: "\u{f013} ",
+  template: "\u{f1c9} ",
+  serverless: "\u{f0c2} "
 };
 
 const EMOJI_ICONS = {
@@ -41,6 +54,9 @@ const EMOJI_ICONS = {
   js: "🟨 ",
   ts: "📘 ",
   react: "⚛️  ",
+  vue: "💚 ",
+  svelte: "🧡 ",
+  astro: "🚀 ",
   style: "🎨 ",
   html: "🌐 ",
   config: "⚙️  ",
@@ -55,7 +71,17 @@ const EMOJI_ICONS = {
   lock: "🔒 ",
   hidden: "👻 ",
   misc: "📌 ",
-  link: "🔗 "
+  link: "🔗 ",
+  database: "🗄️  ",
+  graphql: "◈ ",
+  python: "🐍 ",
+  go: "🔷 ",
+  rust: "🦀 ",
+  php: "🐘 ",
+  ruby: "💎 ",
+  env: "🔧 ",
+  template: "📋 ",
+  serverless: "☁️  "
 };
 
 const ASCII_ICONS = {
@@ -63,6 +89,9 @@ const ASCII_ICONS = {
   js: "[J] ",
   ts: "[T] ",
   react: "[R] ",
+  vue: "[V] ",
+  svelte: "[S] ",
+  astro: "[A] ",
   style: "[S] ",
   html: "[H] ",
   config: "[C] ",
@@ -77,7 +106,17 @@ const ASCII_ICONS = {
   lock: "[L] ",
   hidden: "[.] ",
   misc: "[-] ",
-  link: "[@] "
+  link: "[@] ",
+  database: "[#] ",
+  graphql: "[Q] ",
+  python: "[P] ",
+  go: "[G] ",
+  rust: "[R] ",
+  php: "[H] ",
+  ruby: "[Y] ",
+  env: "[E] ",
+  template: "[T] ",
+  serverless: "[^] "
 };
 
 const DEFAULT_IGNORES = new Set([
@@ -93,7 +132,13 @@ const DEFAULT_IGNORES = new Set([
   "target",
   "vendor",
   ".turbo",
-  ".cache"
+  ".cache",
+  "__pycache__",
+  ".pytest_cache",
+  ".venv",
+  "venv",
+  ".terraform",
+  ".serverless"
 ]);
 
 function getIcons(iconSet = "nerd") {
