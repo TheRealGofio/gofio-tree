@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0]
+
 ### Fixed
 
 - **Nerd Font icons**: Switched from Material Design Plane 15 codepoints (v3+ only) to Font Awesome BMP PUA codepoints, compatible with **all Nerd Font versions** (v2 and v3)
