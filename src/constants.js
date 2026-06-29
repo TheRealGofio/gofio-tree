@@ -40,13 +40,20 @@ const NERD_ICONS = {
   database: "\u{f1c0} ",
   graphql: "\u{e7f4} ",
   python: "\u{e73c} ",
-  go: "\u{e724} ",
+  go: "\u{e627} ",
   rust: "\u{e7a8} ",
   php: "\u{e73d} ",
-  ruby: "\u{e739} ",
+  ruby: "\u{e605} ",
   env: "\u{f013} ",
   template: "\u{f1c9} ",
-  serverless: "\u{f0c2} "
+  serverless: "\u{f0c2} ",
+  c: "\u{e61e} ",
+  csharp: "\u{e648} ",
+  lua: "\u{e826} ",
+  java: "\u{e738} ",
+  font: "\u{e659} ",
+  less: "\u{e758} ",
+  json: "\u{eb0f} "
 };
 
 const EMOJI_ICONS = {
@@ -81,7 +88,14 @@ const EMOJI_ICONS = {
   ruby: "💎 ",
   env: "🔧 ",
   template: "📋 ",
-  serverless: "☁️  "
+  serverless: "☁️  ",
+  c: "⚙️ ",
+  csharp: "🎯 ",
+  lua: "🌙 ",
+  java: "☕ ",
+  font: "🔤 ",
+  less: "🎨 ",
+  json: "📋 "
 };
 
 const ASCII_ICONS = {
@@ -116,7 +130,14 @@ const ASCII_ICONS = {
   ruby: "[Y] ",
   env: "[E] ",
   template: "[T] ",
-  serverless: "[^] "
+  serverless: "[^] ",
+  c: "[c] ",
+  csharp: "[cs] ",
+  lua: "[u] ",
+  java: "[j] ",
+  font: "[F] ",
+  less: "[L] ",
+  json: "[J] "
 };
 
 const DEFAULT_IGNORES = new Set([

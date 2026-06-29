@@ -106,8 +106,13 @@ function classify(name, entry, colors, icons) {
   }
 
 
-  if (/\.(css|scss|sass|less|styl)$/i.test(name)) {
+  if (/\.(css|scss|sass|styl)$/i.test(name)) {
     return { color: colors.purple, icon: icons.style, suffix: "" };
+  }
+
+
+  if (/\.(less)$/i.test(name)) {
+    return { color: colors.purple, icon: icons.less, suffix: "" };
   }
 
 
@@ -151,6 +156,26 @@ function classify(name, entry, colors, icons) {
   }
 
 
+  if (/\.(c|h)$/i.test(name)) {
+    return { color: colors.cyan, icon: icons.c, suffix: "" };
+  }
+
+
+  if (/\.(cs)$/i.test(name)) {
+    return { color: colors.purple, icon: icons.csharp, suffix: "" };
+  }
+
+
+  if (/\.(lua)$/i.test(name)) {
+    return { color: colors.blue, icon: icons.lua, suffix: "" };
+  }
+
+
+  if (/\.(java)$/i.test(name)) {
+    return { color: colors.orange, icon: icons.java, suffix: "" };
+  }
+
+
   if (/\.(sql|prisma|drizzle)$/i.test(name) || /\.(db|sqlite|duckdb)$/i.test(name)) {
     return { color: colors.purple, icon: icons.database, suffix: "" };
   }
@@ -180,10 +205,15 @@ function classify(name, entry, colors, icons) {
 
 
   if (
-    /\.(json|jsonc|yaml|yml|toml|ini|conf)$/i.test(name) ||
+    /\.(jsonc|yaml|yml|toml|ini|conf)$/i.test(name) ||
     /^(\.eslintrc|\.prettierrc|eslint\.config|prettier\.config|tsconfig\.json|tailwind\.config|postcss\.config|stylelint\.config|commitlint\.config|lint-staged\.config|playwright\.config|cypress\.config|vite\.config|webpack\.config|rollup\.config|vitest\.config|jest\.config|next\.config|nuxt\.config|svelte\.config|astro\.config|remix\.config|gatsby\.config)/i.test(name)
   ) {
     return { color: colors.bold + colors.green, icon: icons.config, suffix: "" };
+  }
+
+
+  if (/\.json$/i.test(name)) {
+    return { color: colors.bold + colors.green, icon: icons.json, suffix: "" };
   }
 
 
@@ -192,8 +222,13 @@ function classify(name, entry, colors, icons) {
   }
 
 
-  if (/\.(png|jpg|jpeg|gif|webp|avif|svg|ico|bmp|tiff|woff|woff2|ttf|otf|eot)$/i.test(name)) {
+  if (/\.(png|jpg|jpeg|gif|webp|avif|svg|ico|bmp|tiff)$/i.test(name)) {
     return { color: colors.cyan, icon: icons.image, suffix: "" };
+  }
+
+
+  if (/\.(woff|woff2|ttf|otf|eot)$/i.test(name)) {
+    return { color: colors.cyan, icon: icons.font, suffix: "" };
   }
 
 

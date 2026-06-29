@@ -5,12 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
 
 ## [0.3.0]
 
 ### Added
 
+- **New language detection**: C (.c, .h), C# (.cs), Java (.java), Lua (.lua)
+- **New file type detection**: SQL (.sql, .db, .sqlite), GraphQL (.graphql, .gql), Templates (ejs, pug, hbs, handlebars), Serverless configs (serverless.yml, netlify.toml, vercel.json)
+- **Updated Nerd Font icons**: C# (), Java (), Lua ()
+- **Updated emojis**: Java ☕, Lua 🌙, C# 🎯
+- **Updated ASCII icons**: c [c], csharp [cs], lua [u], java [j]
 - **`.gitignore` support**: Directories and files matching `.gitignore` patterns are automatically excluded. Rules from parent directories are also honored. Use `--no-gitignore` to disable.
 - **`--sort` flag**: Sort entries by `name`, `size`, or `mtime` (`--sort size --reverse` for largest/latest first).
 - **`-r, --reverse` flag**: Reverse sort order (works with `--sort` or standalone to reverse the default name sort).
