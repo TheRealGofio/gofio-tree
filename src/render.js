@@ -158,6 +158,10 @@ function classify(name, entry, colors, icons) {
 }
 
 
+function getParent(relPath) {
+  return relPath === "." ? "." : path.dirname(relPath);
+}
+
 function renderTree(rootDir, entries, options = {}) {
   const colors = getColors(options.noColor);
   const icons = getIcons(options.icons);
@@ -167,11 +171,37 @@ function renderTree(rootDir, entries, options = {}) {
 
   const childCount = new Map();
   const childIndex = new Map();
-
+  const prefixCache = new Map();
 
   for (const entry of entries) {
-    const parent = path.dirname(entry.relPath) === "." ? "." : path.dirname(entry.relPath);
+    const parent = getParent(entry.relPath);
     childCount.set(parent, (childCount.get(parent) ?? 0) + 1);
+  }
+
+  for (const entry of entries) {
+    const parent = getParent(entry.relPath);
+    childIndex.set(parent, (childIndex.get(parent) ?? 0) + 1);
+  }
+
+  function buildPrefix(relPath) {
+    if (prefixCache.has(relPath)) {
+      return prefixCache.get(relPath);
+    }
+
+    const parent = getParent(relPath);
+    let prefix;
+
+    if (parent === "." || parent === "") {
+      prefix = "";
+    } else {
+      const upperIndex = childIndex.get(parent) ?? 0;
+      const upperTotal = childCount.get(parent) ?? 0;
+      const prefixChar = upperIndex < upperTotal ? "│   " : "    ";
+      prefix = buildPrefix(parent) + prefixChar;
+    }
+
+    prefixCache.set(relPath, prefix);
+    return prefix;
   }
 
 
@@ -182,42 +212,21 @@ function renderTree(rootDir, entries, options = {}) {
 
 
   for (const entry of entries) {
-    const parent = path.dirname(entry.relPath) === "." ? "." : path.dirname(entry.relPath);
+    const parent = getParent(entry.relPath);
     const name = entry.name;
-
-
-    childIndex.set(parent, (childIndex.get(parent) ?? 0) + 1);
-
 
     const idx = childIndex.get(parent);
     const total = childCount.get(parent) ?? 0;
     const connector = idx === total ? "└── " : "├── ";
 
-
-    let prefix = "";
-    let currentPath = parent;
-
-
-    while (currentPath !== "." && currentPath !== "") {
-      const upperParent = path.dirname(currentPath) === "." ? "." : path.dirname(currentPath);
-      const upperIndex = childIndex.get(upperParent) ?? 0;
-      const upperTotal = childCount.get(upperParent) ?? 0;
-
-
-      prefix = (upperIndex < upperTotal ? "│   " : "    ") + prefix;
-      currentPath = upperParent;
-    }
-
+    const prefix = buildPrefix(parent);
 
     const style = classify(name, entry, colors, icons);
 
-
-    // Show size for both files AND directories when showSize is true
     const sizeLabel =
       showSize && entry.size > 0
         ? ` ${colors.dim}(${formatSize(entry.size, humanSize)})${colors.reset}`
         : "";
-
 
     lines.push(
       `  ${prefix}${connector}${style.color}${style.icon}${name}${style.suffix}${colors.reset}${sizeLabel}`
@@ -229,7 +238,6 @@ function renderTree(rootDir, entries, options = {}) {
     const { directories, files } = options.summary;
     const dirLabel = directories === 1 ? "directory" : "directories";
     const fileLabel = files === 1 ? "file" : "files";
-
 
     lines.push("");
     lines.push(`  ${colors.dim}${directories} ${dirLabel}, ${files} ${fileLabel}${colors.reset}`);
