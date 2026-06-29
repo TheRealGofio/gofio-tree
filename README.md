@@ -244,3 +244,14 @@ gotree . --icons ascii
 ```
 
 Example output:
+
+```
+gofio-tree
+├── [D] src
+│   ├── [J] index.js
+│   └── [T] constants.js
+├── [F] README.md
+└── [C] package.json
+
+ 2 directories, 3 files
+```
